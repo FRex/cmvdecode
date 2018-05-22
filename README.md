@@ -22,6 +22,7 @@ $ python cmvdecode.py test.cmv test.wav test
 RIFF WAV is 348.2812957763672 MiB.
 CMV Video is 160x118@25FPS.
 It has 206325 frames in 8253 chunks, 48.830078125 KiB each.
+Total CMV Video size: 393.54944801330566 MiB
 It's 137.55 minutes of footage.
 0/8253 chunks done.
 826/8253 chunks done.
@@ -34,4 +35,5 @@ It's 137.55 minutes of footage.
 6608/8253 chunks done.
 7434/8253 chunks done.
 8253/8253 chunks done.
+Padding in chunks was 39.071351051330566 MiB.
 ```

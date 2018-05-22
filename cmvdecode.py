@@ -38,14 +38,18 @@ fps = int.from_bytes(cmv_header[36:39], 'little')
 chunks = math.ceil(fileframes / frames)
 print(f"CMV Video is {vid_width}x{vid_height}@{fps}FPS.")
 print(f"It has {fileframes} frames in {chunks} chunks, {chunk / 1024} KiB each.")
+print(f"Total CMV Video size: {chunks * chunk / 1024 ** 2} MiB")
 print(f"It's {(fileframes / fps) / 60} minutes of footage.")
+padding = 0
 for i in range(chunks):
     if (i % (chunks // 10 + 1)) == 0:
         print(f"{i}/{chunks} chunks done.")
 
     cdata = f.read(chunk)
     jpeglen = int.from_bytes(cdata[0:3], 'little')
+    padding += chunk - jpeglen - 3
     with open(f'{jpeg_folder}/chunk-{i:06}.jpeg', 'wb') as g:
         g.write(cdata[3:3 + jpeglen])
 
 print(f"{chunks}/{chunks} chunks done.")
+print(f"Padding in chunks was {padding / 1024 ** 2} MiB.")
