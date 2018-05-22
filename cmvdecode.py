@@ -2,6 +2,10 @@ import sys
 import math
 
 
+if __name__ != '__main__':
+    raise RuntimeError("This is a script, not a module.")
+
+
 if len(sys.argv) != 4:
     print(f"Usage: {sys.argv[0]} cmv-in wav-out jpeg-folder-out", file=sys.stderr)
     sys.exit(1)
@@ -36,7 +40,12 @@ print(f"CMV Video is {vid_width}x{vid_height}@{fps}FPS.")
 print(f"It has {fileframes} frames in {chunks} chunks, {chunk / 1024} KiB each.")
 print(f"It's {(fileframes / fps) / 60} minutes of footage.")
 for i in range(chunks):
+    if (i % (chunks // 10 + 1)) == 0:
+        print(f"{i}/{chunks} chunks done.")
+
     cdata = f.read(chunk)
     jpeglen = int.from_bytes(cdata[0:3], 'little')
     with open(f'{jpeg_folder}/chunk-{i:06}.jpeg', 'wb') as g:
         g.write(cdata[3:3 + jpeglen])
+
+print(f"{chunks}/{chunks} chunks done.")
